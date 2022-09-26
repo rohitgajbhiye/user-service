@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: notify-pod
+  labels:
+    env: dev
+    tier: backend
+    lang: Go
+spec:
+  containers:
+  - name: user-service
+    image: user-service
+    imagePullPolicy: Never
+    ports:
+    - containerPort: 80
+    lifecycle:
+      preStop:
+        httpGet:
+          path: /preStop
+          port: 80
+          host: localhost
+          scheme: HTTP
